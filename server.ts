@@ -20,6 +20,7 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
+  // debugger;
   server.get(
     '**',
     express.static(browserDistFolder, {
@@ -27,9 +28,9 @@ export function app(): express.Express {
       index: 'index.html',
     }),
   );
-
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
+    // debugger;
     const {protocol, originalUrl, baseUrl, headers} = req;
     commonEngine
       .render({
@@ -40,9 +41,11 @@ export function app(): express.Express {
         providers: [{provide: APP_BASE_HREF, useValue: baseUrl}],
       })
       .then((html) => {
+        // debugger
         return res.send(html);
       })
       .catch((err) => {
+        // debugger
         return next(err);
       });
   });
@@ -52,7 +55,6 @@ export function app(): express.Express {
 
 function run(): void {
   const port = process.env['PORT'] || 4000;
-
   // Start up the Node server
   const server = app();
   server.listen(port, () => {

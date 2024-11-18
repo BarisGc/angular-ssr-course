@@ -15,7 +15,8 @@
     "build:dev-watch": "ng build --watch -c development",
     "build:prod": "ng build -c production",
     "node-server": "node dist/server/server.mjs",
-    "debug:node-server": "npm run build:dev && npm run node-server"
+    "inspect:node-server": "node --inspect dist/server/server.mjs",
+    "debug:node-server": "npm run build:dev && npm run inspect:node-server"
   },
   "private": true,
   "dependencies": {
