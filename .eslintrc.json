@@ -1,0 +1,117 @@
+{
+  "root": true,
+  "ignorePatterns": ["projects/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "plugins": ["rxjs", "rxjs-angular"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:rxjs/recommended"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/contextual-decorator": ["warn"],
+        "@angular-eslint/no-conflicting-lifecycle": ["warn"],
+        "@angular-eslint/no-empty-lifecycle-method": ["warn"],
+        "@angular-eslint/no-forward-ref": ["warn"],
+        "@angular-eslint/no-lifecycle-call": ["warn"],
+        "@angular-eslint/no-pipe-impure": ["warn"],
+        "@angular-eslint/no-queries-metadata-property": ["warn"],
+        "@angular-eslint/prefer-on-push-component-change-detection": 0,
+        "@angular-eslint/prefer-output-readonly": ["warn"],
+        "@angular-eslint/prefer-standalone": ["warn"],
+        "@angular-eslint/relative-url-prefix": ["warn"],
+        "@angular-eslint/use-component-selector": ["warn"],
+        "@angular-eslint/use-component-view-encapsulation": ["warn"],
+        "@angular-eslint/use-injectable-provided-in": ["warn", {}],
+        "@angular-eslint/use-lifecycle-interface": ["warn"],
+        "rxjs-angular/prefer-async-pipe": 0,
+        "rxjs-angular/prefer-composition": [0, {"checkDecorators": ["Component"]}],
+        "rxjs/finnish": [
+          "warn",
+          {
+            "functions": true,
+            "methods": true,
+            "names": {
+              "^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$": false
+            },
+            "parameters": true,
+            "properties": true,
+            "strict": false,
+            "types": {
+              "^EventEmitter$": false
+            },
+            "variables": true
+          }
+        ],
+        "rxjs/no-explicit-generics": "warn",
+        "rxjs/no-unsafe-subject-next": "warn",
+        "rxjs/no-unbound-methods": "warn",
+        "rxjs/no-unsafe-takeuntil": [
+          "warn",
+          {
+            "alias": ["untilDestroyed", "takeUntilDestroyed"]
+          }
+        ],
+        "rxjs/prefer-observer": ["warn"],
+        "rxjs/suffix-subjects": [
+          "warn",
+          {
+            "parameters": true,
+            "properties": true,
+            "suffix": "Subject",
+            "types": {
+              "^EventEmitter$": false
+            },
+            "variables": true
+          }
+        ],
+        "rxjs/no-sharereplay": "warn",
+        "rxjs/no-async-subscribe": "warn",
+        "rxjs/no-ignored-observable": "warn",
+        "rxjs/no-ignored-subscription": "off",
+        "rxjs/throw-error": "warn",
+        "rxjs/no-implicit-any-catch": "off",
+        "rxjs/no-topromise": "warn",
+        "rxjs/no-subscribe-handlers": "off",
+        "rxjs/no-subject-value": "warn",
+        "rxjs/no-subject-unsubscribe": "warn",
+        "rxjs/no-subclass": "warn",
+        "rxjs/no-redundant-notify": "warn",
+        "rxjs/no-nested-subscribe": "off",
+        "rxjs/no-internal": "warn",
+        "rxjs/no-index": "warn",
+        "rxjs/no-ignored-takewhile-value": "warn",
+        "rxjs/no-ignored-replay-buffer": "warn",
+        "rxjs/no-exposed-subjects": ["warn", {"allowProtected": false}]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}

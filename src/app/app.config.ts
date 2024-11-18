@@ -1,60 +1,53 @@
-import {ApplicationConfig, importProvidersFrom} from "@angular/core";
-import {BrowserModule, provideClientHydration} from "@angular/platform-browser";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {MatCardModule} from "@angular/material/card";
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListModule} from "@angular/material/list";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatInputModule} from "@angular/material/input";
-import {MatTableModule} from "@angular/material/table";
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatSortModule} from "@angular/material/sort";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatDialogModule} from "@angular/material/dialog";
-import {AppRoutingModule} from "./app-routing.module";
-import {MatSelectModule} from "@angular/material/select";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {ReactiveFormsModule} from "@angular/forms";
-import {CoursesService} from "./services/courses.service";
-import {CourseResolver} from "./services/course.resolver";
-import {provideAnimations} from "@angular/platform-browser/animations";
-import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
-import {AppShellRenderDirective} from "./directives/app-shell-render.directive";
-import {AppShellNoRenderDirective} from "./directives/app-shell-norender.directive";
+import {IMAGE_CONFIG} from '@angular/common';
+import {provideHttpClient, withInterceptorsFromDi, withFetch} from '@angular/common/http';
+import {ApplicationConfig, importProvidersFrom} from '@angular/core';
+import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
+import {provideAnimations} from '@angular/platform-browser/animations';
+import {
+  InMemoryScrollingOptions,
+  InMemoryScrollingFeature,
+  withInMemoryScrolling,
+  provideRouter,
+  withComponentInputBinding,
+} from '@angular/router';
+import {environment} from 'src/environments/environment.prod';
+import {routes} from './app.routes';
+import {JwtModule} from '@auth0/angular-jwt';
+import {provideToastr} from 'ngx-toastr';
 
+const scrollConfig: InMemoryScrollingOptions = {
+  scrollPositionRestoration: 'enabled',
+};
+const inMemoryScrollingFeature: InMemoryScrollingFeature = withInMemoryScrolling(scrollConfig);
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    /**
+     * barisd:
+     * Development mode'da NgOptimizedImage uyarılarını kapatmak için kullanılır.
+     * Image optimizasyonu için NgOptimizedImage direktifi ve ilgili yönergeler yerine farklı yöntemler kullanılmış, bu sebeple problem olsa da olmasa da(not: problem olup olmaması ayrı bir konu) uyarı veriliyor. Developer tools'daki konsol çıktıları debug yapılamaz hale geliyor.
+     */
+    {
+      provide: IMAGE_CONFIG,
+      useValue: {disableImageSizeWarning: true, disableImageLazyLoadWarning: true},
+    },
     importProvidersFrom(
-      BrowserModule,
-      MatMenuModule,
-      MatButtonModule,
-      MatIconModule,
-      MatCardModule,
-      MatTabsModule,
-      MatSidenavModule,
-      MatListModule,
-      MatToolbarModule,
-      MatInputModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatSortModule,
-      MatProgressSpinnerModule,
-      MatDialogModule,
-      AppRoutingModule,
-      MatSelectModule,
-      MatDatepickerModule,
-      ReactiveFormsModule,
-      AppShellRenderDirective,
-      AppShellNoRenderDirective
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => localStorage.getItem('userToken'),
+          allowedDomains: [environment.baseUrl],
+        },
+      }),
     ),
-    CoursesService,
-    CourseResolver,
-    provideAnimations(),
+    {
+      provide: 'baseUrl',
+      useValue: environment.apiUrl,
+      multi: true,
+    },
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
-    provideClientHydration()
-  ]
+    provideRouter(routes, inMemoryScrollingFeature, withComponentInputBinding()),
+    provideAnimations(),
+    provideToastr(),
+    provideClientHydration(withEventReplay()),
+  ],
 };

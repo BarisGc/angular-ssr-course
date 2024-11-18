@@ -1,59 +1,39 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {Course} from "../model/course";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import {CourseDialogComponent} from "../course-dialog/course-dialog.component";
-import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { NgFor } from '@angular/common';
+import {Component, Input} from '@angular/core';
+import {Course} from '../model/course';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {CourseDialogComponent} from '../course-dialog/course-dialog.component';
+import {RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {NgFor} from '@angular/common';
 
 @Component({
-    selector: 'courses-card-list',
-    templateUrl: './courses-card-list.component.html',
-    styleUrls: ['./courses-card-list.component.scss'],
-    standalone: true,
-    imports: [NgFor, MatCardModule, MatButtonModule, RouterLink]
+  selector: 'app-courses-card-list',
+  templateUrl: './courses-card-list.component.html',
+  styleUrls: ['./courses-card-list.component.scss'],
+  standalone: true,
+  imports: [NgFor, MatCardModule, MatButtonModule, RouterLink],
 })
-export class CoursesCardListComponent implements OnInit {
+export class CoursesCardListComponent {
+  @Input()
+  courses: Course[] = [];
 
-    @Input()
-    courses: Course[];
+  constructor(private dialog: MatDialog) {}
 
-    constructor(private dialog: MatDialog) {
-    }
+  editCourse({description, longDescription, category}: Course) {
+    const dialogConfig = new MatDialogConfig();
 
-    ngOnInit() {
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
 
-    }
+    dialogConfig.data = {
+      description,
+      longDescription,
+      category,
+    };
 
-    editCourse({description, longDescription, category}:Course) {
+    const dialogRef = this.dialog.open(CourseDialogComponent, dialogConfig);
 
-        const dialogConfig = new MatDialogConfig();
-
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-
-        dialogConfig.data = {
-            description, longDescription, category
-        };
-
-        const dialogRef = this.dialog.open(CourseDialogComponent,
-            dialogConfig);
-
-
-        dialogRef.afterClosed().subscribe(
-            val => console.log("Dialog output:", val)
-        );
-
-    }
-
+    dialogRef.afterClosed().subscribe((val) => console.log('Dialog output:', val));
+  }
 }
-
-
-
-
-
-
-
-
-

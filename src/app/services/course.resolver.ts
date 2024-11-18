@@ -1,29 +1,19 @@
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Course} from '../model/course';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {CoursesService} from './courses.service';
-import {first, tap} from 'rxjs/operators';
-import {isPlatformServer} from '@angular/common';
+import {first} from 'rxjs/operators';
 
-
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CourseResolver implements Resolve<Course> {
+  constructor(private coursesService: CoursesService) {}
 
-    constructor(private coursesService: CoursesService) {
+  resolve(route: ActivatedRouteSnapshot): Observable<Course> {
+    const courseId = route.params['id'];
 
-    }
-
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Course> {
-
-        const courseId = route.params['id'];
-
-        return this.coursesService.findCourseById(courseId)
-            .pipe(
-                first()
-            );
-
-
-    }
-
+    return this.coursesService.findCourseById$(courseId).pipe(first());
+  }
 }
