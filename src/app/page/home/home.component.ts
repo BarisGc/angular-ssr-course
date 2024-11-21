@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from '../model/course';
+import {Course} from '../../model/course';
 import {Observable, of} from 'rxjs';
-import {CoursesService} from '../services/courses.service';
+import {CoursesService} from '../../services/courses.service';
 import {map} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
-import {CoursesCardListComponent} from '../courses-card-list/courses-card-list.component';
+import {CoursesCardListComponent} from '../../feature/course/courses-card-list/courses-card-list.component';
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({

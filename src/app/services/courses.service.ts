@@ -1,9 +1,7 @@
-
-
-import {Injectable} from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Course} from "../model/course";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Course} from '../model/course';
 import {Lesson} from '../model/lesson';
 
 @Injectable({

@@ -12,37 +12,19 @@ import {
   Subject,
   BehaviorSubject,
   AsyncSubject,
-  ReplaySubject, from
+  ReplaySubject,
+  from,
 } from 'rxjs';
 import {delayWhen, filter, map, take, timeout} from 'rxjs/operators';
 
-
-
 @Component({
-    selector: 'about',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.css'],
-    standalone: true
+  selector: 'about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.css'],
+  standalone: true,
 })
 export class AboutComponent implements OnInit {
+  ngOnInit() {}
 
-    ngOnInit() {
-
-
-    }
-
-
-  run() {
-
-
-
-  }
-
-
+  run() {}
 }
-
-
-
-
-
-

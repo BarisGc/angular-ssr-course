@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {Course} from '../model/course';
-import {CoursesService} from '../services/courses.service';
-import {Lesson} from '../model/lesson';
+import {Course} from '../../model/course';
+import {CoursesService} from '../../services/courses.service';
+import {Lesson} from '../../model/lesson';
 import {Meta, Title} from '@angular/platform-browser';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NgIf} from '@angular/common';

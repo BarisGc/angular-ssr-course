@@ -32,6 +32,7 @@ export function app(): express.Express {
   server.get('**', (req, res, next) => {
     // debugger;
     const {protocol, originalUrl, baseUrl, headers} = req;
+    res.set('x-source', 'ssr');
     commonEngine
       .render({
         bootstrap,
@@ -41,11 +42,11 @@ export function app(): express.Express {
         providers: [{provide: APP_BASE_HREF, useValue: baseUrl}],
       })
       .then((html) => {
-        // debugger
+        // debugger;
         return res.send(html);
       })
       .catch((err) => {
-        // debugger
+        // debugger;
         return next(err);
       });
   });
